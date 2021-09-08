@@ -19,7 +19,10 @@ body { font-family: sans-serif; }
   transform: translateZ(-100px);
   transition: transform 1s;
 }
-
+/*Now that faces are rotated, only the front and back faces are visible. 
+The 4 side faces are all perpendicular to the viewer, so they appear on-edge, near-invisible. 
+To push them out to their appropriate sides, they need to be translated out from the center of their positions. 
+Each side of the cube is 200px wide. From the cube’s center they’ll need to be translated out half that distance, 100px.*/
 .cube.show-front  { transform: translateZ(-100px) rotateY(   0deg); }
 .cube.show-right  { transform: translateZ(-100px) rotateY( -90deg); }
 .cube.show-back   { transform: translateZ(-100px) rotateY(-180deg); }
@@ -54,3 +57,15 @@ body { font-family: sans-serif; }
 .cube__face--bottom { transform: rotateX(-90deg) translateZ(100px); }
 
 label { margin-right: 10px; }
+
+
+/*Note here that the translate function comes after the rotate. 
+The order of transform functions is meaningful. Each face is first rotated towards its position, then translated outward in a separate direction.
+
+We have rendered a cube, but we’re not done yet.
+
+Un-fuzzing 3D transformed text
+Take another look at the text “front” in the above cube. It’s fuzzy.
+
+3D transforms affect text rendering. When you apply a 3D transform, browsers take a snap-shot of the element and then re-render those pixels with 3D transforms applied. 
+As such, fonts don’t have the same anti-aliasing given their transformed size.*/
